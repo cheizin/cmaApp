@@ -1,0 +1,93 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-buttons slot="end">
+      <ion-menu-button></ion-menu-button>
+    </ion-buttons>
+    <ion-title><ion-icon name="chatbubble-ellipses" class="ion-margin-end"></ion-icon> Feedback</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-grid>
+    <ion-row>
+      <ion-col>
+        <ion-card>
+          <ion-card-header class="ion-margin-bottom">
+            <ion-card-subtitle >We believe in 
+              <span class="info-color" TooltipTouchGestures = "on" (click)="tooltip.toggle()" #tooltip="matTooltip" matTooltip="continuous improvement"
+                    matTooltipPosition="above"> Kaizen (改善法)
+              </span> , & your opinion matters to us. Please share something
+            </ion-card-subtitle>
+          </ion-card-header>
+          <ion-card-content>
+            <form [formGroup]="FeedbackForm">
+              Rate Us
+
+              <ion-row>
+                <ion-col size-lg>
+                  <fieldset style="width: 100%;">
+                    <span class="star-cb-group">
+                      <input type="radio" id="rating-5" name="rating" value="5" formControlName="rating" /><label for="rating-5">5</label>
+                      <input type="radio" id="rating-4" name="rating" value="4" formControlName="rating"><label for="rating-4">4</label>
+                      <input type="radio" id="rating-3" name="rating" value="3" formControlName="rating"/><label for="rating-3">3</label>
+                      <input type="radio" id="rating-2" name="rating" value="2" formControlName="rating"/><label for="rating-2">2</label>
+                      <input type="radio" id="rating-1" name="rating" value="1" formControlName="rating" checked="checked" /><label for="rating-1">1</label>
+                    </span>
+                  </fieldset>
+                </ion-col>
+              </ion-row>
+
+              <ion-row>
+                <ion-col size-lg>
+                  <mat-form-field appearance="fill">
+                    <mat-label>Choose a category</mat-label>
+                    <mat-select formControlName="category" required>
+                      <mat-option value="General">General</mat-option>
+                      <mat-option value="Appreciation">Appreciation</mat-option>
+                      <mat-option value="Problem">Problem</mat-option>
+                      <mat-option value="Suggestion">Suggestion</mat-option>
+                      
+                    </mat-select>
+                  </mat-form-field>
+
+                  <div *ngIf="FeedbackFormControls.category.invalid && (FeedbackFormControls.category.dirty || FeedbackFormControls.category.touched)">
+                    <small *ngIf="FeedbackFormControls.category.errors.required" class="danger-color">
+                        Please choose your category
+                    </small>
+                  </div>
+
+                </ion-col>
+              </ion-row>
+
+              <ion-row>
+                <ion-col size-lg>               
+                  <mat-form-field appearance="fill" style="width: 100%;">
+                    <mat-label>Feedback</mat-label>
+                    <textarea matInput placeholder="Enter Feedback Here" formControlName="feedback" minlength="3" maxlength="500" required></textarea>
+                  </mat-form-field>
+
+                  <div *ngIf="FeedbackFormControls.feedback.invalid && (FeedbackFormControls.feedback.dirty || FeedbackFormControls.feedback.touched)">
+                    <small *ngIf="FeedbackFormControls.feedback.errors.required" class="danger-color">
+                        Please write us something
+                    </small><br/>
+                    <small *ngIf="FeedbackFormControls.feedback.errors.minlength" class="danger-color">
+                      Please type atleast 3 characters
+                  </small><br/>
+                  <small *ngIf="FeedbackFormControls.feedback.errors.maxlength" class="danger-color">
+                    Please type atmost 500 characters
+                </small>
+                  </div>
+                </ion-col>
+              </ion-row>
+
+              <ion-button shape="round" type="submit" expand="block" (click)="SubmitFeedback()" [disabled]="!FeedbackForm.valid">Share Feedback</ion-button>
+
+            </form>
+          </ion-card-content>
+        </ion-card>
+
+
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+</ion-content>

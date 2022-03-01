@@ -1,0 +1,229 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-buttons slot="end">
+      <ion-menu-button></ion-menu-button>
+    </ion-buttons>
+    <ion-title><ion-icon name="person" class="ion-margin-end"></ion-icon> My Account</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-grid>
+
+    <ion-row *ngIf="authState">
+      <ion-col>
+
+        <mat-tab-group mat-stretch-tabs>
+          <mat-tab>
+            <ng-template mat-tab-label>
+              My Profile
+            </ng-template>
+
+            <ion-row>
+              <ion-col>
+
+                <ion-card color="light">
+                  <div class="img-wrapper">
+                    <img src="../../assets/avatar.png" style="border-radius: 50%;" class="ion-margin-top"/>
+                  </div>
+                  <ion-card-content class="ion-text-center">
+                    <h2>{{ authState.displayName }}</h2>
+                    <ion-text color="medium">
+                      <div style="display: flex;" class="ion-justify-content-center">
+                        <p>{{ authState.email }}</p>
+                      </div>
+                    </ion-text>
+                  </ion-card-content>
+
+                  <ion-item class="danger-color">
+                    <ion-icon name="log-out" slot="start"></ion-icon>
+                    <button mat-button class="danger-color" type="submit" (click)="authService.SignOut()"> Sign Out</button>
+                  </ion-item>
+                </ion-card>
+              </ion-col>
+            </ion-row>
+
+
+
+          </mat-tab>
+        
+          <mat-tab>
+            <ng-template mat-tab-label>
+              Update Profile
+            </ng-template>
+            
+            <mat-card>
+              <mat-card-content>
+
+                <ion-row>
+                  <ion-col>
+                    <form [formGroup]="UpdateAccountForm">
+                      <ion-row>
+                        <ion-col size-lg>
+                          <mat-form-field appearance="fill">
+                            <mat-label>Name</mat-label>
+                            <input matInput formControlName="name" type="text" #name required minlength="3" maxlength="50">
+                          </mat-form-field>
+                      
+                          <div *ngIf="UpdateAccountFormControls.name.invalid && (UpdateAccountFormControls.name.dirty || UpdateAccountFormControls.name.touched)">
+                      
+                            <small *ngIf="UpdateAccountFormControls.name.errors.required" class="danger-color">
+                                Please enter your name
+                            </small><br/>
+                            <small *ngIf="UpdateAccountFormControls.name.errors.minlength" class="danger-color">
+                              Please enter atleast 3 characters
+                            </small>
+                            <small *ngIf="UpdateAccountFormControls.name.errors.maxlength" class="danger-color">
+                              Please enter atmost 50 characters
+                            </small>
+                          </div>
+                        </ion-col>
+                      </ion-row>
+    
+                      <ion-row>
+                        <ion-col> 
+                        <ion-button shape="round" type="submit" (click)="updateUsername(name)" expand="block" [disabled]="!UpdateAccountForm.valid">Update Name</ion-button>
+                        </ion-col>
+                      </ion-row>
+                    </form>
+                  </ion-col>
+                </ion-row>
+
+                <ion-row style="display: none;">
+                  <ion-col>
+                    <form [formGroup]="UpdatePictureForm" enctype="multipart/form-data">
+                      <ion-row>
+                        <ion-col size-lg>
+                            <mat-label>Name</mat-label>
+                            <input formControlName="picture" type="file" #picture required minlength="3" maxlength="50">
+
+                      
+                          <div *ngIf="UpdatePictureFormControls.picture.invalid && (UpdatePictureFormControls.picture.dirty || UpdatePictureFormControls.picture.touched)">
+                      
+                            <small *ngIf="UpdatePictureFormControls.picture.errors.required" class="danger-color">
+                                A picture is required
+                            </small><br/>
+                          </div>
+                        </ion-col>
+                      </ion-row>
+    
+                      <ion-row>
+                        <ion-col> 
+                        <ion-button shape="round" type="submit" (click)="updatePicture(picture)" expand="block" [disabled]="!UpdatePictureForm.valid">Update Profile Picture</ion-button>
+                        </ion-col>
+                      </ion-row>
+                    </form> 
+                  </ion-col>
+                </ion-row>
+
+
+              </mat-card-content>
+            </mat-card>
+          </mat-tab>
+
+        </mat-tab-group>
+
+      
+      </ion-col>
+    </ion-row>
+
+
+    <div *ngIf="authState == null">
+      <ion-row > 
+          <ion-col>
+            <mat-card>
+              <mat-card-header>
+                <mat-card-title> Register</mat-card-title>
+              </mat-card-header>
+              <mat-card-content>
+                <form [formGroup]="SignUpForm"> 
+    
+                  <ion-row>
+                    <ion-col size-lg>
+                      <mat-form-field appearance="fill">
+                        <mat-label>Email</mat-label>
+                        <input matInput formControlName="email" required minlength="5" #email maxlength="50">
+                      </mat-form-field>
+              
+                      <div *ngIf="SignUpFormControls.email.invalid && (SignUpFormControls.email.dirty || SignUpFormControls.email.touched)">
+              
+                        <small *ngIf="SignUpFormControls.email.errors.required" class="danger-color">
+                            Please enter your email
+                        </small><br/>
+                        <small *ngIf="SignUpFormControls.email.errors.minlength" class="danger-color">
+                          Please enter atleast 5 characters
+                        </small><br/>
+                        <small *ngIf="SignUpFormControls.email.errors.maxlength" class="danger-color">
+                          Maximum length should be 50 characters
+                        </small><br/>
+                        <small *ngIf="SignUpFormControls.email.errors.email" class="danger-color">
+                          Please enter a valid email
+                        </small>
+                      </div>
+                    </ion-col>
+                  </ion-row>
+              
+                  <ion-row>
+                    <ion-col size-lg>
+                      <mat-form-field appearance="fill">
+                        <mat-label>Enter your password</mat-label>
+                        <input matInput [type]="hide ? 'password' : 'text'" formControlName="password" required minlength="6" maxlength="30" #password>
+                        <button mat-icon-button matSuffix (click)="hide = !hide" [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hide">
+                          <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
+                        </button>
+                      </mat-form-field>
+              
+                      <div *ngIf="SignUpFormControls.password.invalid && (SignUpFormControls.password.dirty || SignUpFormControls.password.touched)">
+              
+                        <small *ngIf="SignUpFormControls.password.errors.required" class="danger-color">
+                            Please enter a password
+                        </small><br/>
+                        <small *ngIf="SignUpFormControls.password.errors.minlength" class="danger-color">
+                          Please enter atleast 6 characters
+                        </small><br/>
+                        <small *ngIf="SignUpFormControls.password.errors.maxlength" class="danger-color">
+                          Maximum length should be 50 characters
+                        </small>
+                      </div>
+                    </ion-col>
+                  </ion-row>
+              
+                  <ion-row>
+                    <ion-col size-lg>
+                      <mat-form-field appearance="fill">
+                        <mat-label>Confirm password</mat-label>
+                        <input matInput [type]="hide ? 'password' : 'text'" formControlName="confirm_password" minlength="6" maxlength="30">
+                        <button mat-icon-button matSuffix (click)="hide = !hide" [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hide">
+                          <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
+                        </button>
+                      </mat-form-field> 
+              
+                      <small class="danger-color" *ngIf="SignUpForm.errors?.mismatch && (SignUpForm.controls['confirm_password'].dirty || SignUpForm.controls['confirm_password'].touched)">
+                        Passwords don't match.
+                      </small>
+                    </ion-col>
+                  </ion-row>
+              
+              
+                  <ion-row>
+                    <ion-col> 
+                    <ion-button shape="round" type="submit" (click)="signUp(email, password)" expand="block" [disabled]="!SignUpForm.valid">Register</ion-button>
+                    </ion-col>
+                  </ion-row>
+              
+                </form>
+              
+                <ion-row class="ion-margin-top ion-text-center">
+                  <ion-col> 
+                    <small routerLink="/login">Already have an account? Log in</small>
+                  </ion-col>
+                </ion-row>
+              </mat-card-content>
+            </mat-card>
+          </ion-col>
+      </ion-row>
+
+    </div>
+
+  </ion-grid>
+</ion-content>

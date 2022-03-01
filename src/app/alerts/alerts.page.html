@@ -1,0 +1,174 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-buttons slot="end">
+      <ion-menu-button></ion-menu-button>
+    </ion-buttons>
+    <ion-title><ion-icon name="newspaper-outline" class="ion-margin-end"></ion-icon> News & Alerts</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+
+  <ion-grid>
+    <ion-row>
+      <ion-col>
+        <mat-card>
+          <mat-card-header>
+            <ion-card-title> <i class="fal fa-bullhorn"></i> CMA Alerts</ion-card-title>
+          </mat-card-header>
+          <mat-card-content>
+            <swiper [config]="config" [cubeEffect]>
+              <ng-template swiperSlide *ngFor="let cma_alerts of cma_alerts">
+                <div >
+                        <ion-card-title>{{ cma_alerts.data.item_name }}</ion-card-title>
+                        <ion-card-subtitle><i>{{ cma_alerts.data.time_recorded | date }}</i></ion-card-subtitle>
+                          <ion-row>
+                            <ion-col>
+                              <p [ngClass]="{'limitTextHeight': isReadMore}">{{ cma_alerts.data.item_description }} </p>
+                            </ion-col>
+                          </ion-row>
+                            <mat-card-actions>
+                              <button mat-button color="primary" type="button" (click)="showText()">{{ isReadMore ? 'Read More': 'Read Less' }}</button>
+                            </mat-card-actions>
+              </div>
+              </ng-template>
+            </swiper>
+          </mat-card-content>
+        </mat-card>
+      </ion-col>
+    </ion-row>
+
+    <ion-row style="display: none;">
+      <ion-col size="12">
+        <mat-card>
+          <mat-card-header (click)="LoadNewsFeed();">
+            <mat-card-title><i class="fal fa-newspaper fa-lg ion-margin-end"></i> News</mat-card-title>
+          </mat-card-header>
+
+          <mat-card-content>
+            <ion-row>
+              <ion-col size-lg>
+                <mat-chip-list aria-label="News selection">
+                  <mat-chip (click)="LoadNewsFeed();">The Financials</mat-chip>
+                  <mat-chip (click)="LoadNewsFeedMarketsCategory();">The Market</mat-chip>
+                  <mat-chip (click)="LoadNewsFeedBusinessCategory();">Business</mat-chip>
+                  
+                </mat-chip-list>
+              </ion-col>
+            </ion-row>
+
+            <ion-row *ngIf="market_div">
+              <ion-col size-lg>
+
+                <swiper [config]="config" [effect]="'cube'">
+                  <ng-template swiperSlide *ngFor="let market_news of market_news['articles']">
+                    <div >
+
+                      <mat-card class="ion-margin-bottom">
+                        <mat-card-header>
+                          <div mat-card-avatar target="_blank" class="example-header-image" style="background-image: url('{{ market_news.media }}');"></div>
+                          <mat-card-title class="ion-text-start">{{ market_news.title }}</mat-card-title>
+                        </mat-card-header>
+                        <mat-card-content>
+                          <mat-card-subtitle>
+                            {{ market_news.summary }} <a href="{{ market_news.link }}">...</a> 
+                          </mat-card-subtitle>
+                          <p>
+                            
+                          </p>
+                          <a href="{{ market_news.link }}">{{ market_news.link }}</a>
+                        </mat-card-content>
+                        <mat-divider inset></mat-divider>
+                        <mat-card-actions>
+                         
+                          <button mat-button>{{ market_news.published_date | date }}</button>
+                        </mat-card-actions>
+                      </mat-card>
+                  </div>
+                  </ng-template>
+                </swiper>
+              </ion-col>
+            </ion-row>
+    
+            <ion-row *ngIf="business_div">
+              <ion-col size-lg>
+
+                <swiper [config]="config" [effect]="'cube'">
+                  <ng-template swiperSlide *ngFor="let business_news of business_news['articles']">
+                    <div >
+                      <mat-card class="ion-margin-bottom">
+                        <mat-card-header>
+                          <div mat-card-avatar target="_blank" class="example-header-image" style="background-image: url('{{ business_news.media }}');"></div>
+                          <mat-card-title class="ion-text-start">{{ business_news.title }}</mat-card-title>
+                        </mat-card-header>
+                        <mat-card-content>
+                          <mat-card-subtitle>
+                            {{ business_news.summary }} <a href="{{ business_news.link }}">...</a> 
+                          </mat-card-subtitle>
+                          <p>
+                            
+                          </p>
+                          <a href="{{ business_news.link }}">{{ business_news.link }}</a>
+                        </mat-card-content>
+                        <mat-divider inset></mat-divider>
+                        <mat-card-actions>
+                         
+                          <button mat-button>{{ business_news.published_date | date }}</button>
+                        </mat-card-actions>
+                      </mat-card>
+                  </div>
+                  </ng-template>
+                </swiper>
+
+
+              </ion-col>
+            </ion-row>
+    
+            <ion-row *ngIf="news_div">
+              <ion-col size-lg>
+
+                <swiper [config]="config" [effect]="'cube'">
+                  <ng-template swiperSlide *ngFor="let news of news['articles']">
+                    <div >
+                      <mat-card class="ion-margin-bottom">
+                        <mat-card-header>
+                          <div mat-card-avatar target="_blank" class="example-header-image" style="background-image: url('{{ news.media }}');"></div>
+                          <mat-card-title class="ion-text-start">{{ news.title }}</mat-card-title>
+                        </mat-card-header>
+                        <mat-card-content>
+                          <mat-card-subtitle>
+                            {{ news.summary }} <a href="{{ news.link }}">...</a> 
+                          </mat-card-subtitle>
+                          <p>
+                            
+                          </p>
+                          <a href="{{ news.link }}">{{ news.link }}</a>
+                        </mat-card-content>
+                        <mat-divider inset></mat-divider>
+                        <mat-card-actions>
+                         
+                          <button mat-button>{{ news.published_date | date }}</button>
+                        </mat-card-actions>
+                      </mat-card>
+                  </div>
+                  </ng-template>
+                </swiper>
+
+              </ion-col>
+            </ion-row>
+    
+    
+    
+              <div>
+                    <ion-refresher slot="fixed" (ionRefresh)="RefreshNews($event);">
+                      <ion-refresher-content></ion-refresher-content>
+                    </ion-refresher>         
+              </div>
+          </mat-card-content>
+
+        </mat-card>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+
+</ion-content>

@@ -1,0 +1,106 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-buttons slot="end">
+      <ion-menu-button></ion-menu-button>
+    </ion-buttons>
+    <ion-title><ion-icon name="ribbon" class="ion-margin-end"></ion-icon>Licencees & Approved Institutions</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <mat-tab-group mat-align-tabs="center" animationDuration="1000ms">
+    <mat-tab>
+      <ng-template mat-tab-label >       
+          <span (click)="GetApprovedInsitutions();">
+            <i class="fas fa-building fa-2x"></i> Approved Insitutions
+          </span>
+      </ng-template>
+      <mat-accordion ng-if="data_loaded">
+        <mat-expansion-panel hideToggle *ngFor="let approved_institutions of approved_institutions">
+          <mat-expansion-panel-header (click)="OpenInstitutions(approved_institutions.data.nature_of_operation)">
+            <mat-panel-title>
+              {{ approved_institutions.data.nature_of_operation }}
+            </mat-panel-title>
+          </mat-expansion-panel-header>
+          
+          <mat-card *ngFor="let institutions of institutions">
+            <mat-card-content>
+              <mat-card-title>{{ institutions.data.company_name }}</mat-card-title>
+              <mat-card-subtitle><ion-icon name="location-outline"></ion-icon>{{ institutions.data.address }}</mat-card-subtitle>
+            </mat-card-content>
+
+          </mat-card>
+          
+        </mat-expansion-panel>
+      </mat-accordion>
+
+    </mat-tab>
+    <mat-tab>
+      <ng-template mat-tab-label>
+         <span (click)="GetApprovedInsitutions();">
+          <i class="fas fa-file-certificate fa-2x"></i>  Licencees
+        </span>
+      </ng-template>
+
+      <mat-accordion>
+        <mat-expansion-panel hideToggle *ngFor="let licencees of licencees">
+          <mat-expansion-panel-header (click)="openLicencees(licencees.data.type)">
+            <mat-panel-title>
+              {{ licencees.data.type }}
+            </mat-panel-title>
+          </mat-expansion-panel-header>
+          
+          <mat-card *ngFor="let licencee of licencee">
+            <mat-card-content>
+              <mat-card-title>{{ licencee.data.company_name }}</mat-card-title>
+              <mat-card-subtitle><ion-icon name="location-outline"></ion-icon>Address: {{ licencee.data.address }}</mat-card-subtitle>
+              <mat-card-subtitle><ion-icon name="ribbon-outline"></ion-icon> License Number {{ licencee.data.license_number }}</mat-card-subtitle>
+            </mat-card-content>
+
+          </mat-card>
+          
+        </mat-expansion-panel>
+      </mat-accordion>
+
+    </mat-tab>
+
+    <mat-tab>
+      <ng-template mat-tab-label>
+        <span (click)="searchforLicencees();">
+          <i class="fas fa-file-search fa-2x"></i>   Search for Licencees
+        </span>
+      </ng-template>
+
+      <ion-grid>
+        <ion-row>
+          <ion-col>
+            <ion-searchbar placeholder="Search..." [(ngModel)]="filterTerm" animated="true"></ion-searchbar>
+          </ion-col>
+        </ion-row>
+        <ion-row>
+          <ion-col *ngFor="let search_for_licencees of search_for_licencees  |filter:filterTerm">
+            <ion-card>
+              <ion-card-header>
+                <ion-card-title><i class="fad fa-building"></i> {{ search_for_licencees.data.company_name }}</ion-card-title>
+                <ion-card-subtitle>{{ search_for_licencees.data.type }}</ion-card-subtitle>
+              </ion-card-header>
+              <ion-card-content>
+                <ion-list>
+                  <ion-item>
+                    <ion-label> <i class="fad fa-map-marker-alt"></i> {{ search_for_licencees.data.address }}</ion-label>
+                  </ion-item>
+                  <ion-item>
+                    <ion-label><i class="fad fa-file-certificate"></i> License Number 
+                             <strong>{{ search_for_licencees.data.license_number }}</strong>
+                    </ion-label>
+                  </ion-item>
+                </ion-list>
+              </ion-card-content>
+            </ion-card>
+          </ion-col>
+        </ion-row>
+      </ion-grid>
+
+    </mat-tab>
+  </mat-tab-group>
+</ion-content>

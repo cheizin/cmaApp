@@ -1,0 +1,40 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-buttons slot="end">
+      <ion-menu-button></ion-menu-button>
+    </ion-buttons>
+    <ion-title><ion-icon name="list-outline" class="ion-margin-end"></ion-icon> Regulated Products</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-grid>
+    <ion-row>
+      <ion-col size="12">
+        <ion-card>
+          <ion-card-header>
+            <ion-card-title><i class="fas fa-sitemap"></i> Available Regulated Products</ion-card-title>
+          </ion-card-header>
+          <ion-card-content>
+            <swiper [effect]="'cube'"
+            [config]="config">
+              <ng-template swiperSlide *ngFor="let investment_products of investment_products">
+                <div >
+                        <ion-card-title>{{ investment_products.data.product_name }}</ion-card-title>
+                          <ion-row>
+                            <ion-col>
+                              <p [ngClass]="{'limitTextHeight': isReadMore}">{{ investment_products.data.product_details }} </p>
+                            </ion-col>
+                          </ion-row>
+                            <mat-card-actions>
+                              <button mat-button color="primary" type="button" (click)="showText()">{{ isReadMore ? 'Read More': 'Read Less' }}</button>
+                            </mat-card-actions>
+              </div>
+              </ng-template>
+            </swiper>
+          </ion-card-content>
+        </ion-card>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+</ion-content>

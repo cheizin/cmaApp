@@ -1,0 +1,388 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-buttons slot="end">
+      <ion-menu-button></ion-menu-button>
+    </ion-buttons>
+    <ion-title><ion-icon name="book" class="ion-margin-end"></ion-icon> Investor Education</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+
+<ion-content>
+  <ion-grid>
+    <ion-row>
+      <ion-col size="12" size-md>
+        <mat-accordion>
+          <mat-expansion-panel>
+            <mat-expansion-panel-header (click)="FetchInvestmentGuide()">
+              <mat-panel-title>
+                <i class="fas fa-user-chart ion-margin-end"></i> How to Invest
+              </mat-panel-title>
+            </mat-expansion-panel-header>
+
+            <mat-expansion-panel>
+              <mat-expansion-panel-header>
+                <mat-panel-title>
+                  <i class="fas fa-user_chart ion-margin-end"></i> Investment Guides
+                </mat-panel-title>
+              </mat-expansion-panel-header>
+              
+              <mat-card-content *ngFor="let how_to_invest of how_to_invest">
+                <div *ngIf="how_to_invest.data.type == 'guide'">
+                  <mat-card-subtitle>{{ how_to_invest.data.title }}</mat-card-subtitle>
+                <p>{{ how_to_invest.data.description }}</p>
+              </div>
+              </mat-card-content>
+            </mat-expansion-panel>
+
+            <mat-expansion-panel>
+              <mat-expansion-panel-header>
+                <mat-panel-title>
+                  <i class="fas fa-user_chart ion-margin-end"></i> Investment Tips
+                </mat-panel-title>
+              </mat-expansion-panel-header>
+              
+              <mat-card-content *ngFor="let how_to_invest of how_to_invest">
+                <div *ngIf="how_to_invest.data.type == 'tip'">
+                  <mat-card-subtitle>{{ how_to_invest.data.title }}</mat-card-subtitle>
+                <p>{{ how_to_invest.data.description }}</p>
+              </div>
+              </mat-card-content>
+            </mat-expansion-panel>
+
+          </mat-expansion-panel>
+
+        </mat-accordion>
+
+
+    </ion-col>
+
+      <ion-col size="12" size-md>
+            <mat-expansion-panel>
+              <mat-expansion-panel-header (click)="GetInvestmentProducts();">
+                <mat-panel-title>
+                  <i class="fas fa-sitemap ion-margin-end"></i> Available Regulated Products
+                </mat-panel-title>
+              </mat-expansion-panel-header>
+              
+              <ion-chip color="secondary" *ngFor="let investment_products of investment_products" (click)="tooltip.toggle()" #tooltip="matTooltip" TooltipTouchGestures = "on"
+                    matTooltip="{{ investment_products.data.product_details }}"
+                    matTooltipPosition="above">
+                <ion-label color="dark">{{ investment_products.data.product_name }}</ion-label>
+              </ion-chip>
+            </mat-expansion-panel>
+      </ion-col>
+
+      <ion-col size="12" size-md>
+        <mat-accordion>
+          <mat-expansion-panel>
+            <mat-expansion-panel-header (click)="getEducationalMaterials();">
+              <mat-panel-title>
+                <i class="fas fa-books ion-margin-end"></i> Educational Materials
+              </mat-panel-title>
+            </mat-expansion-panel-header>
+              <mat-expansion-panel>
+                <mat-expansion-panel-header>
+                  <!--for videos 2-->
+                  <mat-panel-title>
+                    <i class="fab fa-youtube ion-margin-end"></i> Videos
+                  </mat-panel-title>
+                </mat-expansion-panel-header>
+                
+                <mat-card>
+                  <mat-card-content *ngFor="let investor_education of investor_education">
+                    <div *ngIf="investor_education.data.item_category_id == '2'" class="video-container">
+                      <iframe src="https://www.youtube.com/embed/?listType=user_uploads&list=kenyacma" width="100%" height="100%" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                    </div>
+                  </mat-card-content>
+                </mat-card>
+              </mat-expansion-panel>
+
+              <mat-expansion-panel>
+                <mat-expansion-panel-header>
+                  <!--for videos 2-->
+                  <mat-panel-title>
+                   <i class="fas fa-file-alt ion-margin-end"></i> Documents
+                  </mat-panel-title>
+                </mat-expansion-panel-header>
+                
+                <mat-card>
+                  <mat-card-content>
+                    <ion-list *ngFor="let investor_education of investor_education">
+                      <ion-item *ngIf="investor_education.data.item_category_id == '3'">
+
+                         <a mat-button href="{{ FILE_URL+ investor_education.data.item_file}}" download><i class="fas fa-file-alt"></i>  {{ investor_education.data.item_name }} </a>
+                      </ion-item>
+                    </ion-list>
+                  </mat-card-content>
+                </mat-card>
+              </mat-expansion-panel>
+
+              <mat-expansion-panel>
+                <mat-expansion-panel-header>
+                  <!--for videos 2-->
+                  <mat-panel-title>
+                    <i class="fas fa-images ion-margin-end"></i> Pictorials
+                  </mat-panel-title>
+                </mat-expansion-panel-header>
+
+                <swiper [config]="config">
+                  <ng-template swiperSlide *ngFor="let investor_education of investor_education">
+                    <mat-card *ngIf="investor_education.data.item_category_id == '1'">
+                      <img mat-card-image src="{{ FILE_URL+investor_education.data.item_file }}" alt="Poster">
+                      <mat-card-header>
+                        <mat-card-title>{{ investor_education.data.item_name }}</mat-card-title>
+                        <mat-card-subtitle>{{ investor_education.data.item_description }}</mat-card-subtitle>
+                      </mat-card-header>
+                      <mat-divider inset></mat-divider>
+                    </mat-card>
+  
+                  </ng-template>
+                </swiper>
+
+              </mat-expansion-panel>
+
+              <mat-expansion-panel>
+                <mat-expansion-panel-header>
+                  <!--for videos 2-->
+                  <mat-panel-title>
+                   <i class="fas fa-newspaper ion-margin-end"></i> Alerts
+                  </mat-panel-title>
+                </mat-expansion-panel-header>
+                    
+                    <mat-card-content *ngFor="let investor_education of investor_education">
+                      <div *ngIf="investor_education.data.item_category_id == '4'">
+                        <mat-card-subtitle>{{ investor_education.data.item_name }}</mat-card-subtitle>
+                      <p>{{ investor_education.data.item_description }}</p>
+                    </div>
+                    </mat-card-content>
+              </mat-expansion-panel>
+              
+          </mat-expansion-panel>
+
+
+        </mat-accordion>
+      </ion-col>
+
+
+    </ion-row>
+
+    <ion-row>
+
+      <ion-col size="12" size-md>
+        <mat-accordion>
+          <mat-expansion-panel>
+            <mat-expansion-panel-header>
+              <mat-panel-title>
+               <i class="fas fa-calculator ion-margin-end"></i> Financial Calculator
+              </mat-panel-title>
+            </mat-expansion-panel-header>
+            
+            <mat-card>
+              <mat-card-content>
+                <ion-item>
+                  <ion-label position="floating">Savings Goal</ion-label>
+                  <ion-input [(ngModel)]="savings_goal" type="number" value="0"></ion-input>
+                </ion-item>
+                <ion-item>
+                  <ion-label position="floating">Initial Savings Balance</ion-label>
+                  <ion-input [(ngModel)]="initial_savings_balance" type="number" value="0"></ion-input>
+                </ion-item>
+                <ion-item>
+                  <ion-label position="floating">Monthly income from Employment</ion-label>
+                  <ion-input [(ngModel)]="monthly_income_from_employment" type="number" value="0"></ion-input>
+                </ion-item>
+                <ion-item>
+                  <ion-label position="floating">Monthly income from other Sources</ion-label>
+                  <ion-input [(ngModel)]="monthly_income_from_other_sources" type="number" value="0"></ion-input>
+                </ion-item>
+                <ion-item>
+                  <ion-label position="floating">All Monthly Expenses</ion-label>
+                  <ion-input [(ngModel)]="all_monthly_expenses" type="number" value="0"></ion-input>
+                </ion-item>
+                <ion-item>
+                  <ion-label position="floating">Monthly Investment Returns</ion-label>
+                  <ion-input [(ngModel)]="monthly_investment_returns" type="number" value="0"></ion-input>
+                </ion-item>
+  
+                <ion-button shape="round" expand="full" (click)="FinancialCalculator()">Calculate</ion-button>
+              </mat-card-content>
+
+              <mat-expansion-panel *ngIf="FinancialSavingsReport">
+                <mat-expansion-panel-header>
+                  <mat-panel-title>
+                    Financial Savings Report
+                  </mat-panel-title>
+                </mat-expansion-panel-header>
+                
+                <mat-card>
+                  <mat-card-content>
+                    <ion-list>
+                      <ion-item>
+                        <ion-label>Net monthly income after Expenses</ion-label>
+                        <ion-note>{{ net_monthly_income_after_expenses }}</ion-note>
+                      </ion-item>
+              
+                      <ion-item>
+                        <ion-label>Monthly Savings Shortfall</ion-label>
+                        <ion-note>{{ monthly_savings_shortfall }}</ion-note>
+                      </ion-item>
+              
+                      <ion-item>
+                        <ion-label>Annual Savings</ion-label>
+                        <ion-note>{{ annual_savings }}</ion-note>
+                      </ion-item>
+              
+                      <ion-item>
+                        <ion-label>Total Annual Income</ion-label>
+                        <ion-note>{{ total_annual_income }}</ion-note>
+                      </ion-item>
+                    </ion-list>
+                  </mat-card-content>
+                </mat-card>
+              </mat-expansion-panel>
+            </mat-card>
+          </mat-expansion-panel>
+
+
+
+        </mat-accordion>
+      </ion-col>
+
+      <ion-col size="12" size-md>
+            <mat-expansion-panel hideToggle>
+              <mat-expansion-panel-header>
+                <mat-panel-title>
+                  <i class="fas fa-whistle ion-margin-end"></i> Whistle Blowing ( Report suspicous activity )
+                </mat-panel-title>
+              </mat-expansion-panel-header>
+              
+              <ion-row>
+                <ion-col size="12" size-md>
+                  <form [formGroup]="FormGroup" (ngSubmit)="SubmitWhistleBlowerForm()"> 
+                  <mat-stepper orientation="vertical" [linear]="isLinear" #stepper formArrayName="formArray">
+                    <mat-step formGroupName="0" [stepControl]="formArray.get([0])">
+                        <ng-template matStepLabel>Whistle Blower</ng-template>
+
+                          <mat-form-field appearance="fill">
+                            <mat-label>Name</mat-label>
+                            <input matInput formControlName="whistle_blower_name" id="whistle_blower_name" placeholder="Optional">
+                          </mat-form-field>
+
+                          <mat-form-field appearance="fill">
+                            <mat-label>Phone</mat-label>
+                            <input matInput formControlName="whistle_blower_phone" placeholder="Optional">
+                          </mat-form-field>
+
+                          <mat-form-field appearance="fill">
+                            <mat-label>Email</mat-label>
+                            <input matInput formControlName="whistle_blower_email" placeholder="Optional">
+                          </mat-form-field>
+
+                        <div>
+                          <button mat-button matStepperNext type="button">Next</button>
+                        </div>
+                    </mat-step>
+                    <mat-step formGroupName="1" [stepControl]="formArray.get([0])">
+                        <ng-template matStepLabel>Suspect Information</ng-template>
+                        <mat-form-field appearance="fill">
+                          <mat-label>Name</mat-label>
+                          <input matInput formControlName="suspect_name"
+                                 required>
+                        </mat-form-field>
+
+                        <mat-form-field appearance="fill">
+                          <mat-label>Phone</mat-label>
+                          <input matInput formControlName="suspect_phone">
+                        </mat-form-field>
+
+                        <mat-form-field appearance="fill">
+                          <mat-label>Email</mat-label>
+                          <input matInput formControlName="suspect_email">
+                        </mat-form-field>
+                        <div>
+                          <button mat-button matStepperPrevious type="button">Back</button>
+                          <button mat-button matStepperNext type="button">Next</button>
+                        </div>
+                    </mat-step>
+                    <mat-step formGroupName="2" [stepControl]="formArray.get([0])">
+                      <ng-template matStepLabel>Summary</ng-template>
+                      <mat-form-field appearance="fill">
+                        <mat-label>Details</mat-label>
+                        <textarea matInput formControlName="details" placeholder="Highlight Key Details of the event"
+                               required>
+                        </textarea>
+                      </mat-form-field>
+
+                      <mat-form-field appearance="fill">
+                        <mat-label>Place of Occurence</mat-label>
+                        <input matInput formControlName="place_of_occurence">
+                      </mat-form-field>
+
+                      <mat-form-field appearance="fill">
+                        <mat-label>Date of Occurence</mat-label>
+                        <input matInput [matDatepicker]="picker" formControlName="date_of_occurence">
+                        <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                        <mat-datepicker #picker></mat-datepicker>
+                      </mat-form-field>
+
+                      <div>
+                        <button mat-button matStepperPrevious type="button">Back</button>
+                        <button mat-button matStepperNext type="button">Next</button>
+                      </div>
+                  </mat-step>
+
+                   <!-- <mat-step formGroupName="3" [stepControl]="formArray.get([0])">
+                      <ng-template matStepLabel>Attach Evidence</ng-template>
+                     
+                      <mat-form-field>
+                        <ngx-mat-file-input formControlName="file">
+                          <mat-icon ngxMatFileInputIcon>attach_file</mat-icon>
+                        </ngx-mat-file-input>
+                      </mat-form-field>
+
+                      <div>
+                        <button mat-button matStepperPrevious type="button">Back</button>
+                        <button mat-button matStepperNext type="button">Next</button>
+                      </div>
+                  </mat-step>
+                -->
+
+                    <mat-step>
+                      <ng-template matStepLabel>Done</ng-template>
+                      <p>You are now done.</p>
+                      <div>
+                        <button mat-button matStepperPrevious>Back</button>
+                        <button mat-button type="submit" [disabled]="!FormGroup.valid">Submit</button>
+                      </div>
+                    </mat-step>
+                  </mat-stepper>
+                </form>
+                </ion-col>
+              </ion-row>
+
+            </mat-expansion-panel>
+      </ion-col>
+
+      <ion-col>
+        <mat-expansion-panel>
+          <mat-expansion-panel-header>
+            <mat-panel-title>
+              <i class="fas fa-gavel ion-margin-end"></i>Report Complaints
+            </mat-panel-title>
+          </mat-expansion-panel-header>
+          
+          <mat-card>
+            <mat-card-content>
+                <p>You can address your complains through the following link: </p>
+            </mat-card-content>
+            <mat-card-actions>
+              <a mat-button href="https://portal.cma.or.ke/complaints/" class="info-color"><ion-icon name="globe-outline"></ion-icon> https://portal.cma.or.ke/complaints/</a>
+            </mat-card-actions>
+          </mat-card>
+        </mat-expansion-panel>
+      </ion-col>
+    </ion-row>
+
+  </ion-grid>
+</ion-content>

@@ -1,0 +1,234 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-buttons slot="end">
+      <ion-menu-button></ion-menu-button>
+    </ion-buttons>
+    <ion-title><ion-icon name="stats-chart-outline" class="ion-margin-end"></ion-icon> Market Statistics</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-grid>
+    <div>
+      <ion-row>
+        <ion-col size-lg>
+          <ion-card>
+            <ion-card-header>
+              <ion-card-title>Kenya Stock Market (NSE20)</ion-card-title>
+            </ion-card-header>
+
+            <ion-card-content>
+              <p [ngClass]="{'limitTextHeight': isReadMore}">
+                The Nairobi Securities Exchange 20 Share Index NSE20 is a major stock market index which tracks the performance of 20 best performing companies listed on the Nairobi Securities Exchange. The companies are selected based on a weighted market performance for a 12 month period based on market capitalization, number of shares traded, number of deals and turnover. The NSE20 is a major stock market index which tracks the performance of large companies based in Kenya.
+              </p>
+              <button mat-button color="primary" type="button" (click)="showText()">{{ isReadMore ? 'Read More': 'Read Less' }}</button>
+
+              <swiper [config]="config">
+                <ng-template swiperSlide>
+                  <mat-card class="ion-text-start">
+                    <mat-card-title>Forecast</mat-card-title>
+                    <img mat-card-image src="https://d3fy651gv2fhd3.cloudfront.net/charts/kenya-stock-market@2x.png?s=knsmidx&trend=2&forecast=te">
+                  </mat-card>
+                </ng-template>
+  
+                <ng-template swiperSlide>
+                  <mat-card class="ion-text-start">
+                    <mat-card-title>Stats</mat-card-title>
+                    <img mat-card-image src="https://d3fy651gv2fhd3.cloudfront.net/charts/kenya-stock-market@2x.png?s=knsmidx&trend=2&trend=1&ds=1">
+                  </mat-card>
+                </ng-template>
+              </swiper>
+
+            </ion-card-content>
+          </ion-card>
+        </ion-col>
+      </ion-row>
+
+      <ion-row>
+        <ion-col size-lg>
+          <ion-card>
+            <ion-card-header>
+              <ion-card-title>Kenya Government Bond 10y</ion-card-title>
+            </ion-card-header>
+
+            <ion-card-content>
+              <p [ngClass]="{'limitTextHeight': isReadMore}">
+                Generally, a government bond is issued by a national government and is denominated in the country`s own currency. Bonds issued by national governments in foreign currencies are normally referred to as sovereign bonds. The yield required by investors to loan funds to governments reflects inflation expectations and the likelihood that the debt will be repaid.
+              </p>
+              <button mat-button color="primary" type="button" (click)="showText()">{{ isReadMore ? 'Read More': 'Read Less' }}</button>
+
+              <swiper [config]="config">
+                <ng-template swiperSlide>
+                  <mat-card class="ion-text-start">
+                    <mat-card-title>Forecast</mat-card-title>
+                    <img mat-card-image src="https://d3fy651gv2fhd3.cloudfront.net/charts/kenya-government-bond-yield@2x.png?s=kenyagovbon10y&type=spline&forecast=te">
+                  </mat-card>
+                </ng-template>
+  
+                <ng-template swiperSlide>
+                  <mat-card class="ion-text-start">
+                    <mat-card-title>Stats</mat-card-title>
+                    <img mat-card-image src="https://d3fy651gv2fhd3.cloudfront.net/charts/kenya-government-bond-yield@2x.png?s=kenyagovbon10y&type=spline&trend=1&ds=1">
+                  </mat-card>
+                </ng-template>
+              </swiper>
+            </ion-card-content>
+          </ion-card>
+        </ion-col>
+      </ion-row>
+
+      <ion-row>
+        <ion-col size-lg>
+
+          <ion-card>
+            <ion-card-header>
+              <ion-card-title>The Kenyan Shilling</ion-card-title>
+            </ion-card-header>
+
+            <ion-card-content>
+              <p [ngClass]="{'limitTextHeight': isReadMore}">
+                The USDKES spot exchange rate specifies how much one currency, the USD, is currently worth in terms of the other, the KES. While the USDKES spot exchange rate is quoted and exchanged in the same day, the USDKES forward rate is quoted today but for delivery and payment on a specific future date.
+              </p>
+              <button mat-button color="primary" type="button" (click)="showText()">{{ isReadMore ? 'Read More': 'Read Less' }}</button>
+
+              <swiper [config]="config">
+                <ng-template swiperSlide>
+                  <mat-card class="ion-text-start">
+                    <mat-card-title>Forecast</mat-card-title>
+                    <img mat-card-image src="https://d3fy651gv2fhd3.cloudfront.net/charts/kenya-currency@2x.png?s=usdkes&type=column&forecast=te">
+                  </mat-card>
+                </ng-template>
+  
+                <ng-template swiperSlide>
+                  <mat-card class="ion-text-start">
+                    <mat-card-title>Stats</mat-card-title>
+                    <img mat-card-image src="https://d3fy651gv2fhd3.cloudfront.net/charts/kenya-currency@2x.png?s=usdkes&type=line&trend=1&ds=1">
+                  </mat-card>
+                </ng-template>
+              </swiper>
+            </ion-card-content>
+          </ion-card>
+        </ion-col>
+      </ion-row>
+
+
+      <ion-row>
+        <ion-col size-lg>
+
+          <ion-card>
+            <ion-card-header>
+              <ion-card-title>Government</ion-card-title>
+            </ion-card-header>
+
+            <ion-card-content>
+              <swiper [config]="config">
+                <ng-template swiperSlide>
+                  <mat-card class="ion-text-start">
+                    <mat-card-title>
+                      Kenya Government Debt to GDP
+                    </mat-card-title>
+                    <mat-card-subtitle [ngClass]="{'limitTextHeight': isReadMore}">Generally, Government debt as a percent of GDP is used by investors to measure a country ability to make future payments on its debt, thus affecting the country borrowing costs and government bond yields.</mat-card-subtitle>
+                    <button mat-button color="primary" type="button" (click)="showText()">{{ isReadMore ? 'Read More': 'Read Less' }}</button>
+                    <img mat-card-image src="https://d3fy651gv2fhd3.cloudfront.net/charts/kenya-government-debt-to-gdp@2x.png?s=kendebt2gdp">
+  
+                    <mat-card-actions>
+                      <small>Unit :  percent of GDP</small>
+                    </mat-card-actions>
+                  </mat-card>
+                </ng-template>
+  
+                <ng-template swiperSlide>
+                  <mat-card class="ion-text-start">
+                    <mat-card-title>
+                      Kenya Government Budget Value
+                    </mat-card-title>
+                    <mat-card-subtitle [ngClass]="{'limitTextHeight': isReadMore}">The government budget balance is the difference between government revenues and expenses. The budget is balanced when outlays equal to receipts, the country reports budget surplus when revenues are higher than expenses and deficit when expenses exceed the revenues.</mat-card-subtitle>
+                    <button mat-button color="primary" type="button" (click)="showText()">{{ isReadMore ? 'Read More': 'Read Less' }}</button>
+                    <img mat-card-image src="https://d3fy651gv2fhd3.cloudfront.net/charts/kenya-government-budget-value@2x.png?s=kenyagovbudval&type=line">
+  
+                    <mat-card-actions>
+                      <small>Unit :  KES Million</small>
+                    </mat-card-actions>
+                  </mat-card>
+                </ng-template>
+  
+                <ng-template swiperSlide>
+                  <mat-card class="ion-text-start">
+                    <mat-card-title>
+                      Kenya Government Revenue
+                    </mat-card-title>
+                    <mat-card-subtitle [ngClass]="{'limitTextHeight': isReadMore}">Government Revenues refer to all receipts the government gets, including taxes, custom duties, revenue from state-owned enterprises, capital revenues and foreign aid. Government Revenues are part of government budget balance calculation.</mat-card-subtitle>
+                    <button mat-button color="primary" type="button" (click)="showText()">{{ isReadMore ? 'Read More': 'Read Less' }}</button>
+                    <img mat-card-image src="https://d3fy651gv2fhd3.cloudfront.net/charts/kenya-government-revenues@2x.png?s=kenyagovrev">
+  
+                    <mat-card-actions>
+                      <small>Unit :  KES Billion</small>
+                    </mat-card-actions>
+                  </mat-card>
+                </ng-template>
+  
+                <ng-template swiperSlide>
+                  <mat-card class="ion-text-start">
+                    <mat-card-title>
+                      Kenya Government Spending
+                    </mat-card-title>
+                    <mat-card-subtitle [ngClass]="{'limitTextHeight': isReadMore}">Government Spending refers to public expenditure on goods and services and is a major component of the GDP. Government spending policies like setting up budget targets, adjusting taxation, increasing public expenditure and public works are very effective tools in influencing economic growth.</mat-card-subtitle>
+                    <button mat-button color="primary" type="button" (click)="showText()">{{ isReadMore ? 'Read More': 'Read Less' }}</button>
+                    <img mat-card-image src="https://d3fy651gv2fhd3.cloudfront.net/charts/kenya-government-spending@2x.png?s=kenyagovspe">
+  
+                    <mat-card-actions>
+                      <small>Unit :  KES Million</small>
+                    </mat-card-actions>
+                  </mat-card>
+                </ng-template>
+  
+                <ng-template swiperSlide>
+                  <mat-card class="ion-text-start">
+                    <mat-card-title>
+                      Kenya Government Debt
+                    </mat-card-title>
+                    <img mat-card-image src="https://d3fy651gv2fhd3.cloudfront.net/charts/kenya-government-debt@2x.png?s=kenyagovdeb">
+  
+                    <mat-card-actions>
+                      <small>Unit :  KES Billion</small>
+                    </mat-card-actions>
+                  </mat-card>
+                </ng-template>
+  
+              </swiper>
+            </ion-card-content>
+          </ion-card>
+        </ion-col>
+      </ion-row>
+
+      <ion-row>
+        <ion-col size-lg>
+          <mat-card>
+            <mat-card-header>
+              <mat-card-title>Kenya Listed Companies Trend</mat-card-title>
+            </mat-card-header>
+            <img mat-card-image src="https://www.theglobaleconomy.com/graph_country.php?p=0&c=Kenya&i=Listed_companies">
+            <mat-card-content>
+              <p [ngClass]="{'limitTextHeight': isReadMore}">
+                The number of listed companies on the stock exchange in Kenya is an indicator of the development of the stock market. A higher number means that more companies use equity financing in their business
+              </p>
+              <button mat-button color="primary" type="button" (click)="showText()">{{ isReadMore ? 'Read More': 'Read Less' }}</button>
+            </mat-card-content>
+          </mat-card>
+        </ion-col>
+      </ion-row>
+
+    <ion-row>
+      <ion-col size-lg>
+        <mat-card>
+          <mat-card-header>
+            <mat-card-title>Live Markets</mat-card-title>
+          </mat-card-header>
+          <iframe src='https://tickers.mystocks.co.ke/ticker/RMWX$' style="width: 100%;" height="450px"  frameborder='0' scrolling='yes'></iframe>
+        </mat-card>
+        
+      </ion-col>
+    </ion-row>
+    </div>
+  </ion-grid>
+</ion-content>

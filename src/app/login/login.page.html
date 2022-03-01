@@ -1,0 +1,83 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="end">
+      <ion-menu-button></ion-menu-button>
+    </ion-buttons>
+    <ion-title> <i class="fas fa-sign-in-alt ion-margin-right"></i> Log in</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-grid>
+    <ion-row>
+      <ion-col>
+        <mat-card>
+          <mat-card-content>
+            <form [formGroup]="SignInForm">    
+      
+              <ion-row>
+                <ion-col size-lg>
+                  <mat-form-field appearance="fill">
+                    <mat-label>Email</mat-label>
+                    <input matInput formControlName="email" type="email" #email required minlength="5" maxlength="50">
+                  </mat-form-field>
+              
+                  <div *ngIf="SignInFormControls.email.invalid && (SignInFormControls.email.dirty || SignInFormControls.email.touched)">
+              
+                    <small *ngIf="SignInFormControls.email.errors.required" class="danger-color">
+                        Please enter your email
+                    </small><br/>
+                    <small *ngIf="SignInFormControls.email.errors.email" class="danger-color">
+                      Please enter a valid email
+                    </small>
+                  </div>
+                </ion-col>
+              </ion-row>
+          
+              <ion-row>
+                <ion-col size-lg>
+                  <mat-form-field appearance="fill">
+                    <mat-label>Enter your password</mat-label>
+                    <input matInput [type]="hide ? 'password' : 'text'" formControlName="password" required minlength="6" maxlength="30" #password>
+                    <button mat-icon-button matSuffix (click)="hide = !hide" [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hide">
+                      <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
+                    </button>
+                  </mat-form-field>
+              
+                  <div *ngIf="SignInFormControls.password.invalid && (SignInFormControls.password.dirty || SignInFormControls.password.touched)">
+              
+                    <small *ngIf="SignInFormControls.password.errors.required" class="danger-color">
+                        Please enter a password
+                    </small>
+                  </div>
+                </ion-col>
+              </ion-row>
+          
+              <ion-row>
+                <ion-col> 
+                <ion-button shape="round" type="submit" (click)="logIn(email, password)" expand="block" [disabled]="!SignInForm.valid">Log in</ion-button>
+                </ion-col>
+              </ion-row>
+            </form>
+          
+            <ion-row class="ion-margin-top ion-text-center">
+              <ion-col> 
+                <small routerLink="/forgot-password">Forgot Password</small>
+              </ion-col>
+            </ion-row>
+          
+            <ion-row class="ion-margin-top ion-text-center">
+              <ion-col> 
+                <small routerLink="/myaccount">Create a new account</small>
+              </ion-col>
+            </ion-row>      
+          </mat-card-content>
+        </mat-card>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+
+
+
+
+</ion-content>

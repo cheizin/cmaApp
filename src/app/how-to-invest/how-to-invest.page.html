@@ -1,0 +1,44 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-buttons slot="end">
+      <ion-menu-button></ion-menu-button>
+    </ion-buttons>
+    <ion-title><ion-icon name="book-outline" class="ion-margin-end"></ion-icon> How to Invest</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-grid>
+    <ion-row>
+      <ion-col size="12">
+        <ion-card>
+          <ion-card-header>
+            <ion-card-title><i class="fas fa-lightbulb-on"></i> How to Invest</ion-card-title>
+          </ion-card-header>
+          <ion-card-content>
+            <swiper [effect]="'flip'"
+            [grabCursor]="true"
+            [centeredSlides]="true"
+            [slidesPerView]="'auto'"
+            [pagination]="true">
+              <ng-template swiperSlide *ngFor="let how_to_invest of how_to_invest">
+                <div >
+                        <ion-card-title>{{ how_to_invest.data.title }}</ion-card-title>
+                        <ion-card-subtitle><i>{{ how_to_invest.data.type }}</i></ion-card-subtitle>
+                          <ion-row>
+                            <ion-col>
+                              <p [ngClass]="{'limitTextHeight': isReadMore}">{{ how_to_invest.data.description }} </p>
+                            </ion-col>
+                          </ion-row>
+                            <mat-card-actions>
+                              <button mat-button color="primary" type="button" (click)="showText()">{{ isReadMore ? 'Read More': 'Read Less' }}</button>
+                            </mat-card-actions>
+              </div>
+              </ng-template>
+            </swiper>
+          </ion-card-content>
+        </ion-card>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+</ion-content>

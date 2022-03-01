@@ -1,0 +1,166 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-buttons slot="end">
+      <ion-menu-button></ion-menu-button>
+    </ion-buttons>
+    <ion-title><ion-icon name="home" class="ion-margin-end"></ion-icon> Home</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-list id="inbox-list">
+    <ion-card class="ion-text-center">
+      <ion-list-header><img src="../assets/cma-logos/72.png" class="ion-text-center logo-home"></ion-list-header>
+      <h3 style="margin-bottom: 0%;font-family: Helvetica;"> Capital Markets Authority</h3>
+
+      <hr class="hr-home">
+      <ion-note><i><small>"Promoting the Integrity & Growth of the Capital Markets</small></i>"</ion-note>
+    </ion-card>
+
+    <ion-row>
+      <ion-col size="12">
+        <ion-button shape="round" expand="full" ion-activatable ripple-parent routerLink="/login" *ngIf="authState == null">
+          <ion-icon slot="start" name="log-in-outline"></ion-icon>
+          Login
+        </ion-button>
+      </ion-col>
+
+      <ion-col size="12">
+        <ion-button shape="round" expand="full"  ion-activatable ripple-parent routerLink="/myaccount" *ngIf="authState">
+          Hi {{ authState.displayName }}!
+        </ion-button>
+      </ion-col>
+    </ion-row>
+
+
+
+
+
+
+
+
+  </ion-list>
+
+  <ion-grid>
+
+    <ion-row>
+      <ion-col size="6" size-lg>
+        <ion-segment class="mat-elevation-z2 ion-activatable ripple-parent">
+          <ion-segment-button routerLink="/alerts">
+            <ion-icon name="newspaper-outline"></ion-icon>
+            <ion-label>News &<br/> Alerts</ion-label>
+          </ion-segment-button>
+        </ion-segment>
+      </ion-col>
+
+      <ion-col size="6" size-lg>
+        <ion-segment class="mat-elevation-z2" >
+          <ion-segment-button routerLink="/stats" >
+            <ion-icon name="stats-chart-outline"></ion-icon>
+            <ion-label>Market <br/> Statistics</ion-label>
+          </ion-segment-button>
+        </ion-segment>
+      </ion-col>
+
+    </ion-row>
+
+        <ion-row>
+          <ion-col size="6" size-lg>
+            <ion-segment class="mat-elevation-z2">
+              <ion-segment-button routerLink="/saving-tool">
+                <ion-icon name="wallet-outline"></ion-icon>
+                <ion-label>Saving <br/>Tool</ion-label>
+              </ion-segment-button>
+            </ion-segment>
+          </ion-col>
+
+          <ion-col size="6" size-lg>
+            <ion-segment class="mat-elevation-z2">
+              <ion-segment-button routerLink="/licencees">
+                <ion-icon name="ribbon-outline"></ion-icon>
+                <ion-label>Approved <br/>Institutions</ion-label>
+              </ion-segment-button>
+            </ion-segment>
+          </ion-col>
+
+
+        </ion-row>
+  
+        <ion-row>
+
+          <ion-col size="6" size-lg>
+            <ion-segment class="mat-elevation-z2">
+              <ion-segment-button routerLink="/regulated-products">
+                <ion-icon name="list-outline"></ion-icon>
+                <ion-label>Regulated <br/> Products</ion-label>
+              </ion-segment-button>
+            </ion-segment>
+          </ion-col>
+
+          <ion-col size="6" size-lg>
+            <ion-segment class="mat-elevation-z2">
+              <ion-segment-button routerLink="/licencees">
+                <ion-icon name="business-outline"></ion-icon>
+                <ion-label>Market <br/>Intermediaries</ion-label>
+              </ion-segment-button>
+            </ion-segment>
+          </ion-col>
+
+        </ion-row>
+
+        <ion-row>
+          <ion-col size="6" size-lg>
+            <ion-segment class="mat-elevation-z2" >
+              <ion-segment-button routerLink="/how-to-invest">
+                <ion-icon name="book-outline"></ion-icon>
+                <ion-label>How to<br/> Invest</ion-label>
+              </ion-segment-button>
+            </ion-segment>
+          </ion-col>
+
+          <ion-col size="6" size-lg>
+            <ion-segment class="mat-elevation-z2">
+              <ion-segment-button routerLink="/investor-education">
+                <ion-icon name="library-outline"></ion-icon>
+                <ion-label>Investor <br/>Education</ion-label>
+              </ion-segment-button>
+            </ion-segment>
+          </ion-col>
+
+
+
+        </ion-row>
+
+        <ion-row>
+
+          <ion-col size="6" size-lg>
+            <ion-segment class="mat-elevation-z2">
+              <ion-segment-button routerLink="/feedback">
+                <ion-icon name="chatbubble-ellipses-outline"></ion-icon>
+                <ion-label>Feedback</ion-label>
+              </ion-segment-button>
+            </ion-segment>
+          </ion-col>
+
+          <ion-col size="6" size-lg>
+            <ion-segment class="mat-elevation-z2">
+              <ion-segment-button routerLink="/contact-us">
+                <ion-icon name="call-outline"></ion-icon>
+                <ion-label>Contacts</ion-label>
+              </ion-segment-button>
+            </ion-segment>
+          </ion-col>
+
+        </ion-row>
+
+        <ion-row>
+          <ion-col class="ion-text-center">
+            <a mat-button href="https://cmamobileapp.risksys.co.ke/policy.html" target="_blank">Privacy Policy</a>
+          </ion-col>
+        </ion-row>
+
+  </ion-grid>
+
+
+
+</ion-content>

@@ -1,0 +1,93 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="end">
+      <ion-menu-button></ion-menu-button>
+    </ion-buttons>
+    <ion-title><i class="fas fa-user-plus ion-margin-right"></i> Register</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <form [formGroup]="SignUpForm"> 
+    
+    <ion-row>
+      <ion-col size-lg>
+        <mat-form-field appearance="fill">
+          <mat-label>Email</mat-label>
+          <input matInput formControlName="email" required minlength="5" #email maxlength="50">
+        </mat-form-field>
+
+        <div *ngIf="SignUpFormControls.email.invalid && (SignUpFormControls.email.dirty || SignUpFormControls.email.touched)">
+
+          <small *ngIf="SignUpFormControls.email.errors.required" class="danger-color">
+              Please enter your email
+          </small><br/>
+          <small *ngIf="SignUpFormControls.email.errors.minlength" class="danger-color">
+            Please enter atleast 5 characters
+          </small><br/>
+          <small *ngIf="SignUpFormControls.email.errors.maxlength" class="danger-color">
+            Maximum length should be 50 characters
+          </small><br/>
+          <small *ngIf="SignUpFormControls.email.errors.email" class="danger-color">
+            Please enter a valid email
+          </small>
+        </div>
+      </ion-col>
+    </ion-row>
+
+    <ion-row>
+      <ion-col size-lg>
+        <mat-form-field appearance="fill">
+          <mat-label>Enter your password</mat-label>
+          <input matInput [type]="hide ? 'password' : 'text'" formControlName="password" required minlength="6" maxlength="30" #password>
+          <button mat-icon-button matSuffix (click)="hide = !hide" [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hide">
+            <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
+          </button>
+        </mat-form-field>
+
+        <div *ngIf="SignUpFormControls.password.invalid && (SignUpFormControls.password.dirty || SignUpFormControls.password.touched)">
+
+          <small *ngIf="SignUpFormControls.password.errors.required" class="danger-color">
+              Please enter a password
+          </small><br/>
+          <small *ngIf="SignUpFormControls.password.errors.minlength" class="danger-color">
+            Please enter atleast 6 characters
+          </small><br/>
+          <small *ngIf="SignUpFormControls.password.errors.maxlength" class="danger-color">
+            Maximum length should be 50 characters
+          </small>
+        </div>
+      </ion-col>
+    </ion-row>
+
+    <ion-row>
+      <ion-col size-lg>
+        <mat-form-field appearance="fill">
+          <mat-label>Confirm password</mat-label>
+          <input matInput [type]="hide ? 'password' : 'text'" formControlName="confirm_password" minlength="6" maxlength="30">
+          <button mat-icon-button matSuffix (click)="hide = !hide" [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hide">
+            <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
+          </button>
+        </mat-form-field> 
+
+        <small class="danger-color" *ngIf="SignUpForm.errors?.mismatch && (SignUpForm.controls['confirm_password'].dirty || SignUpForm.controls['confirm_password'].touched)">
+          Passwords don't match.
+        </small>
+      </ion-col>
+    </ion-row>
+
+
+    <ion-row>
+      <ion-col> 
+      <ion-button shape="round" type="submit" (click)="signUp(email, password)" expand="block" [disabled]="!SignUpForm.valid">Register</ion-button>
+      </ion-col>
+    </ion-row>
+
+  </form>
+
+  <ion-row class="ion-margin-top ion-text-center">
+    <ion-col> 
+      <small routerLink="/login">Already have an account? Log in</small>
+    </ion-col>
+  </ion-row>
+</ion-content>

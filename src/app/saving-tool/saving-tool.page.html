@@ -1,0 +1,172 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-buttons slot="end">
+      <ion-menu-button></ion-menu-button>
+    </ion-buttons>
+    <ion-title><ion-icon name="wallet" class="ion-margin-end"></ion-icon> Saving Tool</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-grid>
+    <ion-col>  
+      <ion-row *ngIf="authState"> 
+        <ion-col>   
+              <!-- start tab-->
+              <mat-tab-group mat-stretch-tabs mat-align-tabs="center">
+                  <mat-tab>
+                    <ng-template mat-tab-label >
+                      <i class="fas fa-cabinet-filing ion-margin-end"></i>
+                      <span (click)="getUserSavings()">My Current Challenges</span>
+                    </ng-template>
+    
+                    <mat-card class="ion-margin-top" *ngFor="let saving_challenges of saving_challenges"> 
+                      <mat-card-subtitle *ngIf="saving_challenges.data.status == 'active'">
+                        <i class="fas fa-circle success-color"></i> {{ saving_challenges.data.status | titlecase }}
+                      </mat-card-subtitle>
+                      <mat-card-subtitle *ngIf="saving_challenges.data.status == 'inactive'">
+                        <i class="fas fa-circle danger-color"></i> {{ saving_challenges.data.status | titlecase }}
+                      </mat-card-subtitle>
+                      <mat-card-content>
+                        <mat-progress-bar class="green-progress" mode="determinate" value="{{ saving_challenges.data.percentage }}" ></mat-progress-bar>
+                        <mat-list>
+                          <mat-list-item><i class="fal fa-calendar-alt fa-2x"></i> {{ saving_challenges.data.start_date | date }} <sup>Start Date</sup> </mat-list-item>
+                          <mat-list-item><i class="fal fa-calendar-alt fa-2x"></i> {{ saving_challenges.data.end_date | date }} <sup> End Date</sup> </mat-list-item>
+                          <mat-list-item><i class="fal fa-envelope-open-dollar fa-2x"></i> KES {{ saving_challenges.data.saving_target|number }} <sup>Saving Target</sup> </mat-list-item>
+                         </mat-list>
+      
+                         <mat-accordion style="width: 100%;">
+                          <mat-expansion-panel disabled *ngIf="saving_challenges.data.percentage == 100" class="finished">
+                            <mat-expansion-panel-header *ngIf="saving_challenges.data.percentage == 100"  matTooltip="Congratulations! Ready for another challenge?"    matTooltipPosition="above">
+                              <mat-panel-title>
+                                <i class="fal fa-wallet fa-2x"></i><ion-text> KES {{ saving_challenges.data.current_savings | number }} <sup>Current Amount</sup></ion-text> 
+                              </mat-panel-title>
+      
+                            </mat-expansion-panel-header>
+      
+                            <form [formGroup]="savingsUpdateForm" (ngSubmit)="updateUserSavings(saving_challenges.data.id)">
+                        
+                              <mat-form-field appearance="fill">
+                                <mat-label>Update</mat-label>
+                                <input matInput formControlName="savings_update" id="update-{{ saving_challenges.data.id }}" max="{{ saving_challenges.data.saving_target-saving_challenges.data.current_savings}}">
+                                <input type="hidden" id="target-{{ saving_challenges.data.saving_target }}">
+                              </mat-form-field>
+                              
+      
+                              <button mat-raised-button color="primary" style="width: 100%;" type="submit" [disabled]="!savingsUpdateForm.valid">Submit</button>
+                          
+                            </form>
+                        
+                          </mat-expansion-panel>
+      
+      
+                          <mat-expansion-panel *ngIf="saving_challenges.data.percentage < 100" >
+                            <mat-expansion-panel-header  matTooltip="{{ saving_challenges.data.saving_target-saving_challenges.data.current_savings | number }} to go" matTooltipPosition="above">
+                              <mat-panel-title>
+                                <i class="fal fa-wallet fa-2x"></i><ion-text> KES {{ saving_challenges.data.current_savings | number }} <sup>Current Amount</sup></ion-text> 
+                              </mat-panel-title>
+                            </mat-expansion-panel-header>
+      
+                            <form [formGroup]="savingsUpdateForm" (ngSubmit)="updateUserSavings(saving_challenges.data.id)">
+                        
+                              <mat-form-field appearance="fill">
+                                <mat-label>Update</mat-label>
+                                <input matInput formControlName="savings_update" id="update-{{ saving_challenges.data.id }}" max="{{ saving_challenges.data.saving_target-saving_challenges.data.current_savings}}">
+                                <input type="hidden" id="target-{{ saving_challenges.data.saving_target }}">
+                              </mat-form-field>
+                              
+                              <ion-button shape="round" type="submit" expand="block" [disabled]="!savingsUpdateForm.valid">Submit</ion-button>
+                          
+                            </form>
+                        
+                          </mat-expansion-panel>
+      
+                        </mat-accordion>
+      
+                      </mat-card-content>
+                      <mat-card-actions>
+                        <span *ngIf="saving_challenges.data.status == 'inactive' ">
+                          <button mat-button class="success-color" (click)="openSavingChallenge(saving_challenges.data.id)"> <i class="fas fa-file-times"></i> Open Challenge</button>
+                        </span>
+                        <span *ngIf="saving_challenges.data.status == 'active' ">
+                          <button mat-button class="warn-color" (click)="closeSavingChallenge(saving_challenges.data.id)"> <i class="fas fa-file-times"></i> Inactivate Challenge</button>
+      
+                        </span>
+                        <button mat-button class="danger-color" (click)="deleteSavingChallenge(saving_challenges.data.id)"> <i class="fas fa-trash-alt"></i> Delete Challenge</button>
+                        
+                      </mat-card-actions>
+      
+                      <mat-card-footer class="ion-text-center">
+                        <ion-label class="success-color"><i class="fas fa-lightbulb-on"></i> My Inspiration </ion-label>: <i>"{{ saving_challenges.data.inspiration }}"</i>
+                      </mat-card-footer>
+                    </mat-card>
+                    
+        
+                  </mat-tab>
+
+              
+                <mat-tab>
+                  <ng-template mat-tab-label>
+                    <i class="fas fa-file-plus ion-margin-end"></i>
+                    New Saving Challenge
+                  </ng-template>
+
+                  <mat-card>
+                    <form [formGroup]="SavingChallengeForm" (ngSubmit)="SubmitSavingChallenge()">
+                      <mat-form-field appearance="fill">
+                        <mat-label>Click on the calendar to set the duration you wish to start saving</mat-label>
+                        <mat-date-range-input [rangePicker]="picker">
+                          <input matStartDate placeholder="Start date" formControlName="start_date" required readonly>
+                          <input matEndDate placeholder="End date" formControlName="end_date" required readonly>
+                        </mat-date-range-input>
+                        <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                        <mat-date-range-picker touchUi #picker></mat-date-range-picker>
+                      </mat-form-field>
+                    
+                      <mat-form-field appearance="fill" matTooltip="You can save upto 500,000" matTooltipPosition="above">
+                        <mat-label>Saving Target</mat-label>
+                        <input matInput formControlName="saving_target" type="number" min="1" max="500000" required>
+                      </mat-form-field>
+                    
+                      <mat-form-field appearance="fill" matTooltip="share your inspirational message" matTooltipPosition="above">
+                        <mat-label>What inspires you to save?</mat-label>
+                        <textarea matInput formControlName="inspiration" required minlength="5" maxlength="100"></textarea>
+                      </mat-form-field>
+        
+                      <input type="hidden" name="email" formControlName="email">
+                      <input type="hidden" name="uid" formControlName="uid">
+        
+        
+                      <ion-button shape="round" type="submit" expand="block" [disabled]="!SavingChallengeForm.valid">Submit</ion-button>
+    
+                    
+                    </form>
+                  </mat-card>
+  
+
+  
+                </mat-tab>
+              </mat-tab-group>
+              <!-- end tab -->
+  
+  
+        </ion-col>
+      </ion-row>
+
+      <ion-row *ngIf="authState == null">
+        <ion-col>
+          <mat-card>
+            <mat-card-actions>
+              <button mat-button class="danger-color">
+                  <p><ion-icon name="warning-outline"></ion-icon> Ooh... oh! You might want to 
+                       <a routerLink ="/login" routerDirection="root">sign in</a> 
+                         for that</p>
+                </button>
+            </mat-card-actions>
+          </mat-card>
+        </ion-col>
+      </ion-row>
+
+    </ion-col>
+  </ion-grid>
+</ion-content>

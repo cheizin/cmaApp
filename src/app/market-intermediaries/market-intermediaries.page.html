@@ -1,0 +1,71 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-buttons slot="end">
+      <ion-menu-button></ion-menu-button>
+    </ion-buttons>
+    <ion-title><ion-icon name="bar-chart" class="ion-margin-end"></ion-icon> Market Intermediaries</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-grid>
+    <ion-row>
+      <ion-col>
+        <mat-accordion style="width: 100%;">
+          <mat-expansion-panel>
+
+            <mat-expansion-panel-header>
+              <mat-panel-title>
+                Access to NSE
+              </mat-panel-title>
+
+            </mat-expansion-panel-header>
+            <mat-card-content>
+              <iframe src="https://live.mystocks.co.ke/ticker/tape$"  style="width: 100%;height:50px" title="Market Snapshot"></iframe>
+
+              <iframe src="https://www.omniscience.co.ke/RVW/MKT/mktinfo.html" style="width: 100%;" height="450px"></iframe>
+            </mat-card-content>
+
+            <mat-card-actions>
+              <a mat-button href="https://play.google.com/store/apps/details?id=com.deveint.nse&hl=en&gl=US"
+                (click)="SaveRefferal('https://play.google.com/store/apps/details?id=com.deveint.nse&hl=en&gl=US');">
+              <i class="fab fa-google-play"></i> 
+              Access the NSE App
+            </a>
+              <a mat-button href="https://nse.co.ke"><ion-icon name="globe-outline" (click)="SaveRefferal('https://nse.co.ke');"></ion-icon> Learn more about NSE</a>
+            </mat-card-actions> 
+          </mat-expansion-panel>
+        </mat-accordion>
+      </ion-col>
+
+      <ion-col>
+        <mat-accordion style="width: 100%;">
+          <mat-expansion-panel>
+
+            <mat-expansion-panel-header>
+              <mat-panel-title>
+                Access to CDSC
+              </mat-panel-title>
+
+            </mat-expansion-panel-header>
+            <mat-card-content>
+              
+            </mat-card-content>
+
+            <mat-card-actions>
+              <a mat-button href="https://play.google.com/store/apps/details?id=com.escrowgroup.cdscmobile&hl=en&gl=US"
+                (click)="SaveRefferal('https://play.google.com/store/apps/details?id=com.escrowgroup.cdscmobile&hl=en&gl=US');"
+              >
+                <i class="fab fa-google-play"></i>
+                 Access the CDSC App
+              </a>
+              <a mat-button href="https://www.cdsckenya.com/" (click)="SaveRefferal('https://www.cdsckenya.com/');"><ion-icon name="globe-outline"></ion-icon> Learn more about CDSC</a>
+            </mat-card-actions> 
+          </mat-expansion-panel>
+        </mat-accordion>
+      </ion-col>
+
+
+    </ion-row>
+  </ion-grid>
+</ion-content>

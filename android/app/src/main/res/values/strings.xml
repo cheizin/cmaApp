@@ -1,0 +1,7 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="app_name">CMA Kenya</string>
+    <string name="title_activity_main">CMA Kenya</string>
+    <string name="package_name">mobileapp.cma.or.ke</string>
+    <string name="custom_url_scheme">mobileapp.cma.or.ke</string>
+</resources>
